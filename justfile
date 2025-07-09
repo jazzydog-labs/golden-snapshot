@@ -10,3 +10,8 @@ smoke:
     cd golden_project_target && ./scripts/smoke_test_target.sh
     @echo "🛑 Stopping Docker containers..."
     cd golden_project_target && docker-compose down
+
+# Run validation demo
+demo:
+    @echo "🔍 Running validation demo..."
+    bash scripts/demo_validation.sh

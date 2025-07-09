@@ -1,0 +1,55 @@
+{
+  "root": "golden_project_target",
+  "files": [
+    ".gitignore",
+    "Dockerfile",
+    "docker-compose.yml",
+    "entrypoint.sh",
+    "requirements.txt",
+    "__init__.py",
+    "main.py",
+    "database.py",
+    "models/__init__.py",
+    "models/base.py",
+    "models/user.py",
+    "models/post.py",
+    "schemas/__init__.py",
+    "schemas/user_schemas.py",
+    "schemas/post_schemas.py",
+    "routes/__init__.py",
+    "routes/user_routes.py",
+    "routes/post_routes.py",
+    "scripts/smoke_test_target.sh"
+  ],
+  "executable_files": [
+    "entrypoint.sh",
+    "scripts/smoke_test_target.sh"
+  ],
+  "python_files": [
+    "__init__.py",
+    "main.py",
+    "database.py",
+    "models/__init__.py",
+    "models/base.py",
+    "models/user.py",
+    "models/post.py",
+    "schemas/__init__.py",
+    "schemas/user_schemas.py",
+    "schemas/post_schemas.py",
+    "routes/__init__.py",
+    "routes/user_routes.py",
+    "routes/post_routes.py"
+  ],
+  "config_files": [
+    ".gitignore",
+    "Dockerfile",
+    "docker-compose.yml",
+    "requirements.txt"
+  ],
+  "directories": [
+    "models",
+    "schemas",
+    "routes",
+    "scripts"
+  ]
+}

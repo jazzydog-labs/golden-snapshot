@@ -1,0 +1,86 @@
+{
+  "golden_project_target": {
+    "type": "directory",
+    "children": {
+      ".gitignore": {
+        "type": "file"
+      },
+      "Dockerfile": {
+        "type": "file"
+      },
+      "docker-compose.yml": {
+        "type": "file"
+      },
+      "entrypoint.sh": {
+        "type": "file",
+        "executable": true
+      },
+      "requirements.txt": {
+        "type": "file"
+      },
+      "__init__.py": {
+        "type": "file"
+      },
+      "main.py": {
+        "type": "file"
+      },
+      "database.py": {
+        "type": "file"
+      },
+      "models": {
+        "type": "directory",
+        "children": {
+          "__init__.py": {
+            "type": "file"
+          },
+          "base.py": {
+            "type": "file"
+          },
+          "user.py": {
+            "type": "file"
+          },
+          "post.py": {
+            "type": "file"
+          }
+        }
+      },
+      "schemas": {
+        "type": "directory",
+        "children": {
+          "__init__.py": {
+            "type": "file"
+          },
+          "user_schemas.py": {
+            "type": "file"
+          },
+          "post_schemas.py": {
+            "type": "file"
+          }
+        }
+      },
+      "routes": {
+        "type": "directory",
+        "children": {
+          "__init__.py": {
+            "type": "file"
+          },
+          "user_routes.py": {
+            "type": "file"
+          },
+          "post_routes.py": {
+            "type": "file"
+          }
+        }
+      },
+      "scripts": {
+        "type": "directory",
+        "children": {
+          "smoke_test_target.sh": {
+            "type": "file",
+            "executable": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "name": "fastapi-blog-golden-snapshot",
+  "version": "1.0.0",
+  "description": "Reference FastAPI BlogAPI implementation with Users and Posts",
+  "root": "golden_project_target",
+  "structure": {
+    "files": [
+      {
+        "path": ".gitignore",
+        "type": "config",
+        "description": "Git ignore patterns"
+      },
+      {
+        "path": "Dockerfile",
+        "type": "config",
+        "description": "Docker container definition"
+      },
+      {
+        "path": "docker-compose.yml",
+        "type": "config",
+        "description": "Docker compose configuration"
+      },
+      {
+        "path": "entrypoint.sh",
+        "type": "script",
+        "executable": true,
+        "description": "Container entrypoint script"
+      },
+      {
+        "path": "requirements.txt",
+        "type": "config",
+        "description": "Python dependencies with pinned versions"
+      },
+      {
+        "path": "__init__.py",
+        "type": "python",
+        "description": "Package initializer"
+      },
+      {
+        "path": "main.py",
+        "type": "python",
+        "description": "FastAPI application entry point"
+      },
+      {
+        "path": "database.py",
+        "type": "python",
+        "description": "SQLAlchemy database configuration"
+      }
+    ],
+    "directories": [
+      {
+        "path": "models",
+        "description": "SQLAlchemy ORM models",
+        "files": [
+          {
+            "path": "__init__.py",
+            "type": "python",
+            "description": "Models package exports"
+          },
+          {
+            "path": "base.py",
+            "type": "python",
+            "description": "Base model with common fields"
+          },
+          {
+            "path": "user.py",
+            "type": "python",
+            "description": "User model definition"
+          },
+          {
+            "path": "post.py",
+            "type": "python",
+            "description": "Post model definition"
+          }
+        ]
+      },
+      {
+        "path": "schemas",
+        "description": "Pydantic validation schemas",
+        "files": [
+          {
+            "path": "__init__.py",
+            "type": "python",
+            "description": "Schemas package exports"
+          },
+          {
+            "path": "user_schemas.py",
+            "type": "python",
+            "description": "User request/response schemas"
+          },
+          {
+            "path": "post_schemas.py",
+            "type": "python",
+            "description": "Post request/response schemas"
+          }
+        ]
+      },
+      {
+        "path": "routes",
+        "description": "API route handlers",
+        "files": [
+          {
+            "path": "__init__.py",
+            "type": "python",
+            "description": "Routes package exports"
+          },
+          {
+            "path": "user_routes.py",
+            "type": "python",
+            "description": "User CRUD endpoints"
+          },
+          {
+            "path": "post_routes.py",
+            "type": "python",
+            "description": "Post CRUD endpoints"
+          }
+        ]
+      },
+      {
+        "path": "scripts",
+        "description": "Utility scripts",
+        "files": [
+          {
+            "path": "smoke_test_target.sh",
+            "type": "script",
+            "executable": true,
+            "description": "Smoke test suite for API endpoints"
+          }
+        ]
+      }
+    ]
+  },
+  "endpoints": [
+    {
+      "path": "/health",
+      "method": "GET",
+      "description": "Health check endpoint"
+    },
+    {
+      "path": "/users/",
+      "method": "GET",
+      "description": "List all users"
+    },
+    {
+      "path": "/users/",
+      "method": "POST",
+      "description": "Create a new user"
+    },
+    {
+      "path": "/users/{user_id}",
+      "method": "GET",
+      "description": "Get user by ID"
+    },
+    {
+      "path": "/users/{user_id}",
+      "method": "PUT",
+      "description": "Update user"
+    },
+    {
+      "path": "/users/{user_id}",
+      "method": "DELETE",
+      "description": "Delete user"
+    },
+    {
+      "path": "/posts/",
+      "method": "GET",
+      "description": "List all posts"
+    },
+    {
+      "path": "/posts/",
+      "method": "POST",
+      "description": "Create a new post"
+    },
+    {
+      "path": "/posts/{post_id}",
+      "method": "GET",
+      "description": "Get post by ID"
+    },
+    {
+      "path": "/posts/{post_id}",
+      "method": "PUT",
+      "description": "Update post"
+    },
+    {
+      "path": "/posts/{post_id}",
+      "method": "DELETE",
+      "description": "Delete post"
+    }
+  ],
+  "models": [
+    {
+      "name": "User",
+      "fields": ["id", "email", "name", "is_admin", "created_at", "updated_at"],
+      "relationships": {
+        "posts": "one-to-many"
+      }
+    },
+    {
+      "name": "Post",
+      "fields": ["id", "title", "content", "published", "views", "user_id", "created_at", "updated_at"],
+      "relationships": {
+        "user": "many-to-one"
+      }
+    }
+  ],
+  "technologies": {
+    "framework": "FastAPI",
+    "orm": "SQLAlchemy",
+    "validation": "Pydantic",
+    "database": "SQLite",
+    "containerization": "Docker",
+    "python_version": "3.11"
+  },
+  "test_commands": [
+    {
+      "name": "smoke",
+      "command": "just smoke",
+      "description": "Run full Docker build and smoke test suite"
+    }
+  ],
+  "validation_rules": {
+    "file_presence": "all files must exist",
+    "file_content": "files must not be empty",
+    "executables": "scripts must have executable permissions",
+    "docker": "must build successfully",
+    "smoke_tests": "all tests must pass"
+  }
+}
