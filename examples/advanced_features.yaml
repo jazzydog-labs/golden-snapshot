@@ -1,0 +1,215 @@
+# Advanced Schema Features Example
+name: SocialAPI
+description: Social platform with advanced features
+
+# Global configuration
+config:
+  api_version: v1
+  timezone: UTC
+  pagination:
+    default_limit: 20
+    max_limit: 100
+
+entities:
+  User:
+    fields:
+      username:
+        type: string
+        required: true
+        unique: true
+        regex: "^[a-zA-Z0-9_]{3,30}$"
+      email:
+        type: email
+        required: true
+        unique: true
+      bio:
+        type: text
+        max_length: 500
+      avatar_url:
+        type: url
+      verified_at:
+        type: datetime
+        readonly: true
+      follower_count:
+        type: integer
+        default: 0
+        readonly: true
+    
+    indexes:
+      - fields: [username]
+      - fields: [email]
+      - fields: [created_at]
+    
+    methods:
+      - name: follow
+        http_method: POST
+        path: /{id}/follow
+        description: Follow another user
+      
+      - name: unfollow
+        http_method: DELETE
+        path: /{id}/follow
+        description: Unfollow a user
+    
+    validations:
+      - type: custom
+        message: "Username cannot contain offensive words"
+        function: validate_username
+
+  Post:
+    fields:
+      content:
+        type: text
+        required: true
+        max_length: 280
+      hashtags:
+        type: array
+        items: string
+      mentions:
+        type: array
+        items: reference(User)
+      like_count:
+        type: integer
+        default: 0
+        readonly: true
+      repost_count:
+        type: integer
+        default: 0
+        readonly: true
+      is_pinned:
+        type: boolean
+        default: false
+    
+    relationships:
+      author:
+        type: belongs_to
+        entity: User
+        required: true
+        cascade: delete
+      
+      parent:
+        type: belongs_to
+        entity: Post
+        required: false
+        description: "For replies/threads"
+      
+      media:
+        type: has_many
+        entity: Media
+    
+    permissions:
+      create: authenticated
+      read: public
+      update: owner
+      delete: owner_or_admin
+    
+    hooks:
+      before_create:
+        - extract_hashtags
+        - extract_mentions
+      after_create:
+        - notify_mentions
+        - update_trending
+      before_delete:
+        - cleanup_media
+
+  Media:
+    fields:
+      url:
+        type: url
+        required: true
+      type:
+        type: enum
+        values: [image, video, gif]
+        required: true
+      mime_type:
+        type: string
+        required: true
+      size_bytes:
+        type: integer
+        required: true
+      duration_seconds:
+        type: integer
+        description: "For video/audio"
+      thumbnail_url:
+        type: url
+    
+    relationships:
+      post:
+        type: belongs_to
+        entity: Post
+        required: true
+
+# Advanced API features
+api:
+  authentication:
+    type: jwt
+    token_lifetime: 3600
+    refresh_enabled: true
+  
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 60
+    burst: 100
+  
+  caching:
+    enabled: true
+    ttl: 300
+    backends: [redis]
+  
+  search:
+    enabled: true
+    fields:
+      User: [username, bio]
+      Post: [content, hashtags]
+  
+  websocket:
+    enabled: true
+    endpoints:
+      - path: /ws/feed
+        description: Real-time feed updates
+      - path: /ws/notifications
+        description: Real-time notifications
+
+# Background jobs
+jobs:
+  - name: cleanup_old_media
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    function: cleanup_orphaned_media
+  
+  - name: calculate_trending
+    schedule: "*/15 * * * *"  # Every 15 minutes
+    function: update_trending_hashtags
+
+# Monitoring & Observability
+monitoring:
+  metrics:
+    enabled: true
+    provider: prometheus
+  
+  tracing:
+    enabled: true
+    provider: opentelemetry
+  
+  logging:
+    level: info
+    format: json
+    destinations: [stdout, file]
+
+# This advanced schema would generate:
+# - Full authentication system with JWT
+# - WebSocket support for real-time features
+# - Background job processing with Celery
+# - Redis caching layer
+# - Full-text search with Elasticsearch
+# - Rate limiting middleware
+# - Prometheus metrics endpoint
+# - OpenTelemetry tracing
+# - Custom validation functions
+# - Event hooks system
+# - Permission-based access control
+# - Database migrations with Alembic
+# - API versioning
+# - Pagination utilities
+# - Media upload handling
+# - And much more...

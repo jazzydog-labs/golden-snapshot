@@ -1,0 +1,38 @@
+# Minimal Todo App Schema
+name: TodoAPI
+description: Simple todo list management
+
+entities:
+  Todo:
+    fields:
+      title:
+        type: string
+        required: true
+        max_length: 200
+      description:
+        type: text
+      completed:
+        type: boolean
+        default: false
+      due_date:
+        type: datetime
+      priority:
+        type: enum
+        values: [low, medium, high]
+        default: medium
+
+# This minimal schema would generate:
+# - FastAPI app at localhost:8000
+# - GET    /todos          - List all todos
+# - POST   /todos          - Create a todo
+# - GET    /todos/{id}     - Get a specific todo
+# - PUT    /todos/{id}     - Update a todo
+# - DELETE /todos/{id}     - Delete a todo
+# - PATCH  /todos/{id}     - Partial update
+# 
+# Plus:
+# - SQLite database (todos.db)
+# - Docker setup
+# - Health check endpoint
+# - OpenAPI docs at /docs
+# - Smoke tests

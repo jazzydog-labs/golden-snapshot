@@ -1,0 +1,39 @@
+{
+  "project_name": "BlogAPI",
+  "entities": {
+    "User": {
+      "fields": {
+        "email": {
+          "type": "string",
+          "unique": true,
+          "required": true
+        },
+        "name": "string",
+        "is_admin": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "Post": {
+      "fields": {
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "content": {
+          "type": "text"
+        },
+        "published": {
+          "type": "boolean",
+          "default": false
+        },
+        "views": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "belongs_to": "User"
+    }
+  }
+}

@@ -1,0 +1,123 @@
+# Example: E-commerce API Schema
+name: ShopAPI
+description: E-commerce platform with products, orders, and customers
+
+entities:
+  Customer:
+    fields:
+      email:
+        type: email
+        required: true
+        unique: true
+      first_name:
+        type: string
+        required: true
+      last_name:
+        type: string
+        required: true
+      phone:
+        type: string
+      address:
+        type: text
+      is_verified:
+        type: boolean
+        default: false
+
+  Product:
+    fields:
+      name:
+        type: string
+        required: true
+      description:
+        type: text
+      price:
+        type: decimal
+        required: true
+        min: 0
+      stock_quantity:
+        type: integer
+        default: 0
+        min: 0
+      sku:
+        type: string
+        unique: true
+        required: true
+      is_active:
+        type: boolean
+        default: true
+    relationships:
+      category:
+        type: belongs_to
+        entity: Category
+        required: true
+
+  Category:
+    fields:
+      name:
+        type: string
+        required: true
+        unique: true
+      slug:
+        type: string
+        unique: true
+        required: true
+      description:
+        type: text
+
+  Order:
+    fields:
+      order_number:
+        type: string
+        unique: true
+        generated: true  # Auto-generated
+      status:
+        type: enum
+        values: [pending, processing, shipped, delivered, cancelled]
+        default: pending
+      total_amount:
+        type: decimal
+        required: true
+      shipping_address:
+        type: text
+        required: true
+      notes:
+        type: text
+    relationships:
+      customer:
+        type: belongs_to
+        entity: Customer
+        required: true
+      items:
+        type: has_many
+        entity: OrderItem
+
+  OrderItem:
+    fields:
+      quantity:
+        type: integer
+        required: true
+        min: 1
+      unit_price:
+        type: decimal
+        required: true
+      subtotal:
+        type: decimal
+        computed: quantity * unit_price
+    relationships:
+      order:
+        type: belongs_to
+        entity: Order
+        required: true
+      product:
+        type: belongs_to
+        entity: Product
+        required: true
+
+# The schema above would generate:
+# - FastAPI app with all CRUD endpoints
+# - SQLAlchemy models with proper relationships
+# - Pydantic schemas for validation
+# - Docker setup
+# - OpenAPI documentation
+# - Admin panel (optional)
+# - Authentication system (if specified)

@@ -1,0 +1,70 @@
+name: BlogAPI
+description: A simple blog API with users and posts
+
+entities:
+  User:
+    fields:
+      email:
+        type: email
+        required: true
+        unique: true
+      name:
+        type: string
+      is_admin:
+        type: boolean
+        default: false
+    
+  Post:
+    fields:
+      title:
+        type: string
+        required: true
+      content:
+        type: text
+      published:
+        type: boolean
+        default: false
+      views:
+        type: integer
+        default: 0
+    relationships:
+      author:
+        type: belongs_to
+        entity: User
+        required: true
+
+api:
+  base_path: /api/v1
+  authentication: none  # Could be: jwt, oauth2, api_key
+  cors:
+    enabled: true
+    allow_origins: ["*"]
+  
+  endpoints:
+    users:
+      list: true
+      create: true
+      read: true
+      update: true
+      delete: true
+    
+    posts:
+      list: true
+      create: true
+      read: true
+      update: true
+      delete: true
+      filters:
+        - field: published
+          type: boolean
+        - field: author
+          type: relationship
+
+database:
+  type: sqlite  # Could be: postgres, mysql, sqlite
+  name: blog
+
+deployment:
+  containerized: true
+  port: 8000
+  health_check: /health
