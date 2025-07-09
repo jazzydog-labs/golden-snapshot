@@ -71,4 +71,14 @@ This is the schema that we will be using, the fastapi should match this:
 ```
 
 ## Commit Guidance
-Focus exclusively on hand-written FastAPI code and infrastructure. When complete, move this file to `commits/closed/`. 
+Focus exclusively on hand-written FastAPI code and infrastructure. When complete, move this file to `commits/closed/`.
+
+## Completion Details
+- **Completed**: 2025-07-09
+- **Commit Hashes**:
+  - `8a5e8a9` - Create Golden Snapshot FastAPI reference implementation
+  - `6404d93` - Add validation system for golden snapshot testing
+- **Status**: ✅ All acceptance criteria met
+  - Smoke tests pass locally
+  - All endpoints work as expected in Docker
+  - Code formatted with black and isort 

@@ -30,6 +30,6 @@ class Post(PostBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
     user: Optional[User] = None
-    
+
     class Config:
         from_attributes = True
