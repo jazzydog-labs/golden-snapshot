@@ -37,3 +37,24 @@ commits/open/0001_create_golden_snapshot.md
 ```
 
 Get that done and we’re finished. 🎉
+
+
+## Demo Guidelines
+
+When creating demos, ALWAYS start with a "killer feature" that is:
+- **Concise**: Show the most impressive capability in 2-3 lines of code
+- **Attention-grabbing**: Demonstrate immediate value
+- **To the point**: No setup, just the wow factor
+- **Practical**: Show why users should care
+
+Example format:
+```python
+def demo_killer_feature():
+    """The ONE thing that makes this feature amazing."""
+    print("=== KILLER FEATURE: Transform any idea into 10 refined versions in seconds ===")
+    idea = Idea.create("Basic concept", score=5.0)
+    best_version = idea.auto_refine(iterations=10).get_best_version()
+    print(f"Original score: 5.0 → Best score: {best_version.score} (+{best_version.score - 5.0} improvement!)")
+```
+
+Then proceed with the detailed demo sections.
